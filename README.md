@@ -1,3 +1,10 @@
+# Customized by mm0ck3r
+I wanted just run a vivado on mac silicon with window mode. So, I have to use this installer with old version(8e662c3294db99172576188d7d25ce6b2e5e4340).
+
+In this repo, standard vivado version is 21.1
+
+If you will use another version, then Modify Modules in install_config.txt. check the [ModulesByVersion](https://github.com/ichi4096/vivado-on-silicon-mac/tree/2426e5e008f6d913895ea74e6f7f3567d30f9694/scripts/install_configs)
+
 # vivado-on-silicon-mac
 This is a tool for installing [Xilinx Vivado™](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools.html) on Arm®-based Apple silicon Macs (Tested on M2 MacBook Air with 2022 Edition of Vivado). It is in no way associated with Xilinx.
 

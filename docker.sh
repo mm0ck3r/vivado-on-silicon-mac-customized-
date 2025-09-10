@@ -52,4 +52,4 @@ done
 # Run installer
 f_echo "You successfully logged into your account. The installation will begin now."
 f_echo "If a window pops up, simply close it to finish the installation."
-/home/user/installer/xsetup -c /home/user/install_config.txt -b Install -a XilinxEULA,3rdPartyEULA
+/home/user/installer/xsetup -c /home/user/install_config.txt -b Install -agree XilinxEULA,3rdPartyEULA,WebTalkTerms

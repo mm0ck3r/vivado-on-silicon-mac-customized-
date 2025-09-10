@@ -7,12 +7,12 @@ function f_echo {
 
 script_dir=$(dirname -- "$(readlink -nf $0)";)
 
-# check internet connectivity
-if ! ping -q -c1 google.com &>/dev/null
-	then
-		f_echo "Could not connect to the internet. Recheck and run ./install again."
-		exit 1
-fi
+# # check internet connectivity
+# if ! ping -q -c1 google.com &>/dev/null
+# 	then
+# 		f_echo "Could not connect to the internet. Recheck and run ./install again."
+# 		exit 1
+# fi
 
 # check if Docker is installed
 if ! [ -d "/Applications/Docker.app" ]
@@ -48,7 +48,7 @@ done
 
 # Build the Docker image according to the dockerfile
 f_echo "Building Docker image"
-docker build -t x64-linux .
+docker build --platform linux/amd64 -t x64-linux "$script_dir"
 
 # Copy Vivado installation file into $script_dir
 installation_binary=""
@@ -63,22 +63,22 @@ cp $installation_binary $script_dir
 f_echo "Launching Docker container and installation script"
 /usr/local/bin/docker run -it --rm --mount type=bind,source="/tmp/.X11-unix",target="/tmp/.X11-unix" --mount type=bind,source="$script_dir",target="/home/user" --platform linux/amd64 x64-linux bash /home/user/docker.sh
 
-# Create App icon
-f_echo "Generating App icon"
-input_file=$(find Xilinx/Vivado/*/doc/images/vivado_logo.png)
-mkdir icon.iconset
-sips -z 16 16 "$input_file" --out "icon.iconset/icon_16x16.png"
-sips -z 32 32 "$input_file" --out "icon.iconset/icon_16x16@2x.png"
-sips -z 32 32 "$input_file" --out "icon.iconset/icon_32x32.png"
-sips -z 64 64 "$input_file" --out "icon.iconset/icon_32x32@2x.png"
-sips -z 128 128 "$input_file" --out "icon.iconset/icon_128x128.png"
-sips -z 256 256 "$input_file" --out "icon.iconset/icon_128x128@2x.png"
-sips -z 256 256 "$input_file" --out "icon.iconset/icon_256x256.png"
-sips -z 512 512 "$input_file" --out "icon.iconset/icon_256x256@2x.png"
-sips -z 512 512 "$input_file" --out "icon.iconset/icon_512x512.png"
-iconutil -c icns icon.iconset
-rm -rf icon.iconset
-mv icon.icns Launch_Vivado.app/Contents/Resources/icon.icns
+# # Create App icon
+# f_echo "Generating App icon"
+# input_file=$(find Xilinx/Vivado/*/doc/images/vivado_logo.png)
+# mkdir icon.iconset
+# sips -z 16 16 "$input_file" --out "icon.iconset/icon_16x16.png"
+# sips -z 32 32 "$input_file" --out "icon.iconset/icon_16x16@2x.png"
+# sips -z 32 32 "$input_file" --out "icon.iconset/icon_32x32.png"
+# sips -z 64 64 "$input_file" --out "icon.iconset/icon_32x32@2x.png"
+# sips -z 128 128 "$input_file" --out "icon.iconset/icon_128x128.png"
+# sips -z 256 256 "$input_file" --out "icon.iconset/icon_128x128@2x.png"
+# sips -z 256 256 "$input_file" --out "icon.iconset/icon_256x256.png"
+# sips -z 512 512 "$input_file" --out "icon.iconset/icon_256x256@2x.png"
+# sips -z 512 512 "$input_file" --out "icon.iconset/icon_512x512.png"
+# iconutil -c icns icon.iconset
+# rm -rf icon.iconset
+# mv icon.icns Launch_Vivado.app/Contents/Resources/icon.icns
 
 # Create Launch_Vivado script; needed for getting script path
 # Launch XQuartz and Docker
